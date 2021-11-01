@@ -1,5 +1,4 @@
 use std::fmt::Write;
-use std::collections::VecDeque;
 
 pub fn add_arrays(arr_a: &[i64], arr_b: &[i64]) -> Vec<i64> {
     let mut result: Vec<i64> = Vec::new();
@@ -10,11 +9,9 @@ pub fn add_arrays(arr_a: &[i64], arr_b: &[i64]) -> Vec<i64> {
     } else if arr_b.is_empty() && !arr_a.is_empty() {
         return arr_a.to_vec()
     } else {
-        let result_1: String = arr_a.iter().fold(String::new(), |mut s, &n| {write!(s, "{}", n).ok(); s});
-        let result1 = result_1.parse::<i32>().unwrap();
-        let result_2: String = arr_b.iter().fold(String::new(), |mut s, &n| {write!(s, "{}", n).ok(); s});
-        let result2 = result_2.parse::<i32>().unwrap();
-        let mut result_temp: VecDeque<char> = (result2 + result1).to_string().chars().collect();
+        let result_1: i32 = arr_a.iter().fold(String::new(), |mut s, &n| {write!(s, "{}", n).ok(); s}).parse::<i32>().unwrap();
+        let result_2: i32 = arr_b.iter().fold(String::new(), |mut s, &n| {write!(s, "{}", n).ok(); s}).parse::<i32>().unwrap();
+        let mut result_temp: Vec<char> = (result_2 + result_1).to_string().chars().collect();
         let mut i = 0;
         while i <= (result_temp.len() - 1) {
             if result_temp[i] == '-' {
