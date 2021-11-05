@@ -1,14 +1,25 @@
 
+// pub fn is_prime(n: u64) -> bool {
+//     if n < 4 {
+//         return true
+//     } else if n % 2 == 0 {
+//         return false
+//     }
+//     for i in 4..(n/2) {
+//         if n % i == 0 {
+//             return false
+//         }
+//     }
+//     true
+// }
 pub fn is_prime(n: u64) -> bool {
-    if n < 4 {
-        return true
-    } else if n % 2 == 0 {
-        return false
-    }
-    for i in 4..(n/2) {
-        if n % i == 0 {
+    let mut i = 2;
+
+    while i <= (n as f32).sqrt() as i32 {
+        if n as i32 % i == 0 {
             return false
         }
+        i += 1;
     }
     true
 }
@@ -23,11 +34,12 @@ pub fn step(g: i32, m: u64, n: u64) -> Option<(u64, u64)> {
     }
     if !primes.is_empty() {
         for i in 0..primes.len() {
-            let start: usize = if (i as i32 - g) < 0 { 0 } else { i - g as usize };
-            let end: usize = if (i + g as usize) > primes.len() - 1 { primes.len() - 1 } else { i + g as usize };
-            let end = &primes[start..end].into_iter().find(|&x| primes[i] as i64 - *x as i64  == g as i64 || primes[i] as i64 - *x as i64  == g as i64 * -1);
+            let end_check: usize = if (i + g as usize) > primes.len() - 1 { primes.len() - 1 } else { i + g as usize };
+            let end = primes[i..end_check]
+                .into_iter()
+                .find(|&x| primes[i] as i32 - *x as i32  == g  || primes[i] as i32 - *x as i32  == g * -1);
             if let Some(end) = end {
-                return Some((primes[i], **end))
+                return Some((primes[i], *end))
             }
         }
     }
