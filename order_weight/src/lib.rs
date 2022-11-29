@@ -12,13 +12,14 @@ fn order_weight(s: &str) -> String {
     }
     res.sort_by(|a, b| a.2.cmp(&b.2));
     let mut counter = 0i32;
-    while counter < (res.len() - 1) as i32 {
+    let length = res.len();
+    while counter < (length - 1) as i32 {
         if (res[counter as usize].2 == res[counter as usize + 1].2) && (res[counter as usize].1 > res[counter as usize + 1].1) {
-            let temp = res[counter as usize];
-            res[counter as usize] = res[counter as usize + 1];
-            res[counter as usize + 1] = temp;
-            counter -= 1;
-        }   
+                let temp = res[counter as usize];
+                res[counter as usize] = res[counter as usize + 1];
+                res[counter as usize + 1] = temp;
+                counter = 0;
+        }
         counter += 1;
     }
     for x in res.iter().enumerate() {
